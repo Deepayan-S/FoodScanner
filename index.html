@@ -11,7 +11,14 @@
         <h1>Food Facts Scanner</h1>
 
         <div id="scanner-container">
-            <video id="video" autoplay playsinline></video>
+            <input type="file" id="image-input" accept="image/*" style="display: none;">
+            <label for="image-input" id="file-label" class="file-label">
+                <span>Choose Image</span>
+            </label>
+            <div id="image-preview-container" style="display: none;">
+                <img id="image-preview" src="" alt="Image Preview">
+                <button id="scan-btn" class="scan-btn">Scan Barcode</button>
+            </div>
         </div>
 
         <div id="results-container" style="display: none;">
@@ -26,7 +33,8 @@
         <div id="error-message"></div>
     </div>
 
-    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script src="https://unpkg.com/@zxing/library@0.20.0"></script>
+    <script src="https://unpkg.com/quagga@0.12.1/dist/quagga.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

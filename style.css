@@ -30,12 +30,60 @@ h1 {
     margin-bottom: 20px;
 }
 
-#video {
+.file-label {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.file-label:hover {
+    background-color: #0056b3;
+}
+
+.file-label span {
+    pointer-events: none;
+}
+
+#image-preview-container {
     width: 100%;
-    height: auto;
-    display: block; /* Remove extra space below video */
+    margin-bottom: 20px;
+}
+
+#image-preview {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
     border: 1px solid #ddd;
     border-radius: 4px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.scan-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.scan-btn:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.scan-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
 }
 
 #results-container {
