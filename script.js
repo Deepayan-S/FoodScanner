@@ -26,39 +26,51 @@ async function initScanner() {
     codeReader = new ZXing.BrowserMultiFormatReader();
 
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: 'environment'
-            }
-        });
-        currentStream = stream;
-        videoElement.srcObject = stream;
-        videoElement.play();
+        // List video input devices and then decode from the first one
+        const videoInputDevices = await codeReader.listVideoInputDevices();
 
-        codeReader.decodeFromVideoStream(videoElement, (result, err) => {
-            if (result) {
-                console.log('Barcode scanned:', result.getText());
-                const barcode = result.getText();
-                // Crucially: Stop the scanner and camera tracks
-                codeReader.reset();
-                currentStream.getTracks().forEach(track => track.stop());
-                fetchProductData(barcode);
-            }
-            if (err && !(err instanceof ZXing.NotFoundException)) {
-                console.error(err);
-                showError('Error scanning barcode.');
-                // Stop camera in case of other errors
-                if (currentStream) {
-                    currentStream.getTracks().forEach(track => track.stop());
+        if (videoInputDevices.length > 0) {
+            const firstDeviceId = videoInputDevices[0].deviceId;
+            console.log(`Using video device: ${videoInputDevices[0].label}`);
+
+            // Assign the stream to currentStream to allow stopping it later
+            codeReader.decodeFromVideoDevice(firstDeviceId, videoElement.id, (result, err) => {
+                if (result) {
+                    console.log('Barcode scanned:', result.getText());
+                    const barcode = result.getText();
+                    // Crucially: Stop the scanner and camera tracks
+                    codeReader.reset();
+                    // currentStream is not directly available here, so we get it from videoElement
+                    if (videoElement.srcObject) {
+                        videoElement.srcObject.getTracks().forEach(track => track.stop());
+                    }
+                    fetchProductData(barcode);
                 }
-            }
-        });
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                    console.error('Error while decoding:', err);
+                    showError('Error scanning barcode.');
+                    // Stop camera in case of other errors
+                    if (videoElement.srcObject) {
+                        videoElement.srcObject.getTracks().forEach(track => track.stop());
+                    }
+                }
+            });
+
+            // getUserMedia is internally handled by decodeFromVideoDevice, but we need the stream for stopping
+            // The stream object needs to be accessible, let's keep track of it if possible, or rely on videoElement.srcObject
+            // For now, we will rely on videoElement.srcObject for stopping tracks.
+
+        } else {
+            showError('No video input devices found. Please ensure a camera is available.');
+            console.error('No video input devices found');
+        }
 
     } catch (err) {
-        console.error('Error accessing camera:', err);
-        showError('Could not access the camera. Please ensure permissions are granted.');
-        if (currentStream) {
-            currentStream.getTracks().forEach(track => track.stop());
+        console.error('Error accessing camera or listing devices:', err);
+        showError('Could not access the camera or list devices. Please ensure permissions are granted. Error details in console.');
+        // Stop camera in case of errors
+        if (videoElement.srcObject) {
+            videoElement.srcObject.getTracks().forEach(track => track.stop());
         }
     }
 }
