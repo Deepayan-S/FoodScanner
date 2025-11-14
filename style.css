@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top instead of center vertically */
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#app-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Max width for a card-like design */
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#scanner-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#video {
+    width: 100%;
+    height: auto;
+    display: block; /* Remove extra space below video */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#results-container {
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+#product-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: block; /* Ensure it's a block element */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#product-name {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#nutri-score {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    display: inline-block; /* Make it fit content */
+    margin-bottom: 10px;
+}
+
+/* Nutri-Score Grades */
+.nutri-a {
+    background-color: #008c45; /* Green */
+}
+.nutri-b {
+    background-color: #8cc63f; /* Light Green */
+}
+.nutri-c {
+    background-color: #ffcc00; /* Yellow */
+    color: #333;
+}
+.nutri-d {
+    background-color: #ee7b2f; /* Orange */
+}
+.nutri-e {
+    background-color: #e62020; /* Red */
+}
+
+#product-ingredients,
+#product-allergens {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#scan-again-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#scan-again-btn:hover {
+    background-color: #0056b3;
+}
+
+#error-message {
+    color: #d8000c;
+    background-color: #ffbaba;
+    border: 1px solid #d8000c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #app-container {
+        margin-top: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
